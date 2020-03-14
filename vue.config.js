@@ -10,6 +10,9 @@ module.exports = {
         'views': '@/views',
         'api': '@/api'
       }
+    },
+    devServer: {
+      disableHostCheck: true // 设置了这个才能映射域名！
     }
   }
 }
