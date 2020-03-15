@@ -14,6 +14,10 @@
       probeType: {
         type: Number,
         default: 0
+      },
+      pullUpLoad: {
+        type: Boolean,
+        default: false
       }
     },
     data(){
@@ -21,10 +25,35 @@
         scroll: null
       }
     },
+    methods: {
+      scrollTo(x, y, time = 500){
+        this.scroll.scrollTo(x, y, time)
+      },
+      finishPullUp(){
+        this.scroll.finishPullUp()
+      },
+      finishPullDown(){
+        this.scroll.finishPullDown()
+      },
+      refresh(){
+        this.scroll.refresh()
+      }
+    },
     mounted(){ // Vue生命周期 Vue实例挂载完之后执行！
       this.scroll = new BScroll(this.$refs.wrapper, {
-        click: true,
-        probeType: 2, // 该属性默认值为0,表示不监听屏幕滚动位置,
+        click: true, // 需要监听滚动区域中的div这类元素的click事件
+        probeType: this.probeType, // 该属性默认值为0,表示不监听屏幕滚动位置
+        pullUpLoad: this.pullUpLoad
+      })
+
+      // 实时监听滚动位置
+      this.scroll.on('scroll', position => {
+        this.$emit('scroll', position)
+      })
+
+      // 监听下拉动作
+      this.scroll.on('pullingUp', () => {
+        this.$emit('pullUpLoad')
       })
     }
   }
