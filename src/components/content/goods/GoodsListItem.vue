@@ -1,6 +1,6 @@
 <template>
   <div class="goods-item">
-    <img :src="good.show.img" alt="">
+    <img :src="good.show.img" alt="" @load="goodImageLoadFinish">
     <div class="goods-info">
       <p>{{good.title}}</p>
       <span class="price">{{good.price}}</span>
@@ -16,6 +16,12 @@ export default {
     good: {
       type: Object,
       required: true
+    }
+  },
+    methods: {
+    goodImageLoadFinish(){
+      // 通过此方法监听到图片加载完成、img标签加载完成就会触发此函数
+      this.$EventBus.$emit('goodImageLoadFinish') // 通过进行调用Vue事件总线的$emit进行发射出去一个函数
     }
   }
 }

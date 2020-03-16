@@ -4,14 +4,14 @@
       <div slot="center">蘑菇街</div>
     </nav-bar>
     <scroll class="content" 
-      ref="scroll" 
-      :probe-type="3" 
-      @scroll="contentScroll"
-      :pull-up-load="true"
-      @pullUpLoad="loadNextPageData">
-      <home-swiper :banners="banners" />
-      <recommend-view :recommends="recommends" />
-      <feature-view />
+            ref="scroll" 
+            :probe-type="3" 
+            @scroll="contentScroll"
+            :pull-up-load="true"
+            @pullUpLoad="loadNextPageData">
+            <home-swiper :banners="banners" />
+            <recommend-view :recommends="recommends" />
+            <feature-view />
       <tab-control class="tab-control" :titles="titles" @tabClick="tabControlChanage" />
       <goods-list :goods="showGoods" />
     </scroll>
@@ -32,6 +32,7 @@ import RecommendView from "./components/RecommendView"
 import FeatureView from "./components/FeatureView"
 
 import { getHomeMultiData, getHomeGoods } from "api/home"
+import { debounce } from 'common/utils'
 
 export default {
   name: "Home",
@@ -84,7 +85,6 @@ export default {
   methods: {
     loadNextPageData(){
       this._getHomeGoods(this.currentType)
-      console.log(this.goods['pop'].list.length)
     },
     contentScroll(position){
       this.isShowBackTop = (-position.y) > 1000
@@ -103,7 +103,7 @@ export default {
         })
         .catch(err => {
           console.log(err)
-        });
+        })
     },
     _getHomeGoods(type) {
       const page = this.goods[type].page + 1
@@ -112,7 +112,6 @@ export default {
           this.goods[type].page = res.data.page
           this.goods[type].list.push(...res.data.list)
           this.$refs.scroll.finishPullUp()
-          this.$refs.scroll.refresh()
         })
         .catch(err => {
           console.log(err)
@@ -124,15 +123,22 @@ export default {
       return this.goods[this.currentType].list
     }
   },
-  created() {
+  created() { // Vue生命周期函数、当VUE实例创建完成时，就会执行这个函数
     // 请求首页轮播图等数据
-    this._getHomeMultiData();
+    this._getHomeMultiData()
     // 请求流行数据
     this._getHomeGoods("pop")
     // 请求上新数据
     this._getHomeGoods("new")
     // 请求热销数据
     this._getHomeGoods("sell")
+  },
+  mounted(){ // Vue生命周期函数、当Vue实例将app DOM元素挂载完成时会触发此函数
+    // 调用防抖函数、定义一个变量进行接收防抖函数返回出来的一个新函数。
+    const scrollRefresh = debounce(this.$refs.scroll.refresh, 100)
+    this.$EventBus.$on('goodImageLoadFinish', () => {
+      scrollRefresh()
+    })
   }
 };
 </script>

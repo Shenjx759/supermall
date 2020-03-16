@@ -27,16 +27,17 @@
     },
     methods: {
       scrollTo(x, y, time = 500){
-        this.scroll.scrollTo(x, y, time)
+        // 关系&&、如果 && 前面的为null、undefined或者false 则就不会执行 && 后面的表达式
+        this.scroll && this.scroll.scrollTo(x, y, time)
       },
       finishPullUp(){
-        this.scroll.finishPullUp()
+        this.scroll && this.scroll.finishPullUp()
       },
       finishPullDown(){
-        this.scroll.finishPullDown()
+        this.scroll && this.scroll.finishPullDown()
       },
       refresh(){
-        this.scroll.refresh()
+        this.scroll && this.scroll.refresh()
       }
     },
     mounted(){ // Vue生命周期 Vue实例挂载完之后执行！
