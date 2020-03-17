@@ -8,6 +8,7 @@ const Home = () => import('views/home/Home')
 const Profile = () => import('views/profile/Profile')
 const ShopCart = () => import('views/shopcart/ShopCart')
 const Category = () => import('views/category/Category')
+const Detail = () => import('views/detail/Detail')
 
 const router = [
   {
@@ -29,6 +30,10 @@ const router = [
   {
     path: '/profile',
     component: Profile
+  },
+  {
+    path: '/detail/:iid',
+    component: Detail
   }
 ]
 

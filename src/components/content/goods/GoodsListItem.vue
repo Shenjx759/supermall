@@ -1,5 +1,5 @@
 <template>
-  <div class="goods-item">
+  <div class="goods-item" @click="goodItemClick">
     <img :src="good.show.img" alt="" @load="goodImageLoadFinish">
     <div class="goods-info">
       <p>{{good.title}}</p>
@@ -18,10 +18,29 @@ export default {
       required: true
     }
   },
-    methods: {
+  data(){
+    return{
+      goodIid: ''
+    }
+  },
+  created() {
+    this.goodIid = this.good.iid
+  },
+  methods: {
     goodImageLoadFinish(){
       // 通过此方法监听到图片加载完成、img标签加载完成就会触发此函数
       this.$EventBus.$emit('goodImageLoadFinish') // 通过进行调用Vue事件总线的$emit进行发射出去一个函数
+    },
+    goodItemClick(){
+      // 动态路由方式
+      this.$router.push('/detail/' + this.goodIid)
+      // 地址Query传参方式
+      // this.$router.push({
+      //   path: '/detail',
+      //   query: {
+      //     iid: this.iid
+      //   }
+      // })
     }
   }
 }
