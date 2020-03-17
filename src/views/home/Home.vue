@@ -3,16 +3,17 @@
     <nav-bar class="home-nav">
       <div slot="center">蘑菇街</div>
     </nav-bar>
+    <tab-control class="tab-control" ref="tabControl1" v-show="isTabControlfixed" :titles="titles" @tabClick="tabControlChanage" />
     <scroll class="content" 
             ref="scroll" 
             :probe-type="3" 
             @scroll="contentScroll"
             :pull-up-load="true"
             @pullUpLoad="loadNextPageData">
-            <home-swiper :banners="banners" />
+            <home-swiper :banners="banners" @homeSwiperImgLoadFinish="swiperImgLoadFinish" />
             <recommend-view :recommends="recommends" />
             <feature-view />
-      <tab-control class="tab-control" :titles="titles" @tabClick="tabControlChanage" />
+      <tab-control :titles="titles" ref="tabControl2" v-show="!isTabControlfixed" @tabClick="tabControlChanage" />
       <goods-list :goods="showGoods" />
     </scroll>
     <back-top @click.native="backTop" v-show="isShowBackTop"/>
@@ -79,21 +80,35 @@ export default {
         }
       },
       currentType: "pop",
-      isShowBackTop: false
+      isShowBackTop: false,
+      isTabControlfixed: false,
+      tabControlOffsetTop: 0,
+      scrollY: 0
     }
   },
   methods: {
+    swiperImgLoadFinish(){
+      this.tabControlOffsetTop = this.$refs.tabControl2.$el.offsetTop
+    },
     loadNextPageData(){
       this._getHomeGoods(this.currentType)
     },
     contentScroll(position){
       this.isShowBackTop = (-position.y) > 1000
+      this.isTabControlfixed = (-position.y) > this.tabControlOffsetTop 
     },
     backTop(){
       this.$refs.scroll.scrollTo(0, 0)
     },
     tabControlChanage(e) {
-      this.currentType = e
+      this.currentType = e.type
+      // 将两个tabControl组件的值进行一个同步处理
+      this.$refs.tabControl1.currentIndex = e.index
+      this.$refs.tabControl2.currentIndex = e.index
+      // 切换tabControl时、将scroll的y值进行一个回顶
+      this.$refs.scroll.scrollTo(0, -this.tabControlOffsetTop, 500)
+      // 对better-scroll进行一次刷新、避免出现滚动不了的问题
+      this.$refs.scroll.refresh()
     },
     _getHomeMultiData() {
       getHomeMultiData()
@@ -111,7 +126,8 @@ export default {
         .then(res => {
           this.goods[type].page = res.data.page
           this.goods[type].list.push(...res.data.list)
-          this.$refs.scroll.finishPullUp()
+          // better-scroll只支持一次上拉操作、如果需要执行下次的上拉操作，就需要在这里执行一次finishPullUp函数来通知scroll当前上拉操作已经完成！
+          this.$refs.scroll.finishPullUp() 
         })
         .catch(err => {
           console.log(err)
@@ -122,6 +138,18 @@ export default {
     showGoods() {
       return this.goods[this.currentType].list
     }
+  },
+  activated() {
+    console.log('---进来Home视图---')
+    // 进入视图时、则进行读取一下保存的scrollY值、并且将scroll滚动到对应的值
+    this.$refs.scroll.scrollTo(0, this.scrollY, 0)
+    // 再对better-scroll进行一次刷新操作，避免出现滚动不了的问题！
+    this.$refs.scroll.refresh()
+  },
+  deactivated() {
+    console.log('---离开Home视图---')
+    // 在此处离开Home视图时、记录一下当前better-scroll的y值
+    this.scrollY = this.$refs.scroll.getScrollY()
   },
   created() { // Vue生命周期函数、当VUE实例创建完成时，就会执行这个函数
     // 请求首页轮播图等数据
@@ -145,7 +173,7 @@ export default {
 
 <style scoped>
 .home {
-  padding-top: 44px;
+  /* padding-top: 44px; */
   height: 100vh; /* vh => 视口单位 */
   position: relative;
 }
@@ -154,21 +182,19 @@ export default {
   background-color: var(--color-tint);
   color: #fff;
   /* box-shadow: 0px -3px 1px rgba(100, 100, 100, 0.1); 设置光圈 */
-  position: fixed;
+  /*在使用浏览器原生滚动时, 为了让导航不跟随一起滚动*/
+  /* position: fixed;
   left: 0;
   right: 0;
   top: 0;
+  z-index: 9; */
+}
+
+.tab-control{
+  position: relative;
   z-index: 9;
 }
 
-.tab-control {
-  position: sticky;
-  top: 44px;
-  height: 44px;
-  line-height: 44px;
-  background-color: #fff;
-  z-index: 9;
-}
 .content{
   overflow: hidden;
   position: absolute;
@@ -177,8 +203,4 @@ export default {
   right: 0;
   left: 0;
 }
-/* .content {
-  height: calc(100% - 93px);
-  margin-top: 44px;
-} */
 </style>

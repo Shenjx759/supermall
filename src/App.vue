@@ -1,6 +1,8 @@
 <template>
   <div id="app">
-    <router-view />
+    <keep-alive><!-- 该标签可以让router-view中的组件不会进行销毁操作！ -->
+      <router-view />
+    </keep-alive>
     <main-tabbar class="main-tabbar" />
   </div>
 </template>

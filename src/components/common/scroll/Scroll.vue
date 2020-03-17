@@ -38,6 +38,9 @@
       },
       refresh(){
         this.scroll && this.scroll.refresh()
+      },
+      getScrollY(){
+        return this.scroll ? this.scroll.y : 0
       }
     },
     mounted(){ // Vue生命周期 Vue实例挂载完之后执行！
@@ -48,14 +51,18 @@
       })
 
       // 实时监听滚动位置
-      this.scroll.on('scroll', position => {
-        this.$emit('scroll', position)
-      })
+      if(this.probeType === 2 || this.probeType === 3){ // 严谨判断、如果不通过判断、则就不需要监听
+        this.scroll.on('scroll', position => {
+          this.$emit('scroll', position)
+        })
+      }
 
-      // 监听下拉动作
-      this.scroll.on('pullingUp', () => {
-        this.$emit('pullUpLoad')
-      })
+      // 监听scroll滚动到底部
+      if(this.pullUpLoad){
+        this.scroll.on('pullingUp', () => { // 严谨判断、如果不通过判断、则就不需要监听
+          this.$emit('pullUpLoad')
+        })
+      }
     }
   }
 </script>
