@@ -1,6 +1,14 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-03-11 16:07:18
+ * @LastEditTime: 2020-03-18 14:18:42
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \project\supermall\src\App.vue
+ -->
 <template>
   <div id="app">
-    <keep-alive><!-- 该标签可以让router-view中的组件不会进行销毁操作！ -->
+    <keep-alive exclude="Detail"><!-- 该标签可以让router-view中的组件不会进行销毁操作！ -->
       <router-view />
     </keep-alive>
     <main-tabbar class="main-tabbar" />

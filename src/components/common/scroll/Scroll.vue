@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-03-13 20:36:00
+ * @LastEditTime: 2020-03-18 17:47:49
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \project\supermall\src\components\common\scroll\Scroll.vue
+ -->
 <template>
   <div class="wrapper" ref="wrapper">
     <div class="content">
@@ -58,8 +66,8 @@
       }
 
       // 监听scroll滚动到底部
-      if(this.pullUpLoad){
-        this.scroll.on('pullingUp', () => { // 严谨判断、如果不通过判断、则就不需要监听
+      if(this.pullUpLoad){// 严谨判断、如果不通过判断、则就不需要监听
+        this.scroll.on('pullingUp', () => { 
           this.$emit('pullUpLoad')
         })
       }
