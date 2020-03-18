@@ -1,19 +1,19 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-17 21:26:52
- * @LastEditTime: 2020-03-18 21:10:15
+ * @LastEditTime: 2020-03-18 21:51:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\Detail.vue
  -->
 <template>
   <div class="detail">
-    <detail-nav-bar class="detail-nav" />
+    <detail-nav-bar class="detail-nav" @detailNavClick="navClick"/>
     <scroll ref="scroll" class="content">
       <detail-swiper :good-top-images="topImages" />
       <detail-base-info :base-info="goodsInfo" />
       <detail-shop-info :shop-info="shopInfo"/>
-      <detail-info :detail-info="detailInfo" />
+      <detail-info :detail-info="detailInfo" @detailImgLoadFinish="detailImgLoadFinish" />
       <detail-param-info :param-info="paramsInfo" />
     </scroll>
   </div>
@@ -52,6 +52,27 @@
         detailInfo: {}
       }
     },
+    methods: {
+      detailImgLoadFinish(){
+        // 商品详情图片都加载完之后、统一让better-scroll对象刷新一次、刷新用作于让scroll重新计算一次高度
+        this.$refs.scroll.refresh()
+      },
+      navClick(e){
+        switch(e){
+          case 0:
+            
+          break;
+          case 1:
+
+          break;
+          case 2:
+          
+          break;
+          case 3:
+          
+        }
+      }
+    },
     created() {
       // 将传过来的商品id进行保存
       this.iid = this.$route.params.iid
@@ -60,10 +81,9 @@
         // 接收result
         const data = res.result
         // 打印data
-        console.log(data)
+        // console.log(data)
         // 保存商品的轮播图
         this.topImages = data.itemInfo.topImages
-
         // 获取商品信息
         this.goodsInfo = new GoodsInfo(data.itemInfo, data.columns, data.shopInfo.services)
         // 获取商家信息

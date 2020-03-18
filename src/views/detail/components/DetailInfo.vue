@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-18 21:06:20
- * @LastEditTime: 2020-03-18 21:12:59
+ * @LastEditTime: 2020-03-18 21:31:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\components\DetailGoodsImgInfo.vue
@@ -16,7 +16,7 @@
     </div>
     <div class="info-key">{{detailInfo.detailImage[0].key}}</div>
     <div class="info-list">
-      <img v-for="(item, index) in detailInfo.detailImage[0].list" :key="index" :src="item" alt="">
+      <img v-for="(item, index) in detailInfo.detailImage[0].list" :key="index" :src="item" @load="imgLoad" alt="">
     </div>
   </div>
 </template>
@@ -27,6 +27,24 @@ export default {
     detailInfo: {
       type: Object,
       required: true
+    }
+  },
+  data(){
+    return{
+      imgLoadCount: 0,
+      imgCount: 0
+    }
+  },
+  methods: {
+    imgLoad(){
+      if(++this.imgLoadCount === this.imgCount){
+        this.$emit('detailImgLoadFinish')
+      }
+    }
+  },
+  watch: {
+    detailInfo(){
+      this.imgCount = Object.keys(this.detailInfo).length !== 0 ? this.detailInfo.detailImage[0].list.length : 0
     }
   }
 }

@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-03-17 21:39:55
+ * @LastEditTime: 2020-03-18 21:45:37
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \project\supermall\src\views\detail\components\DetailNavBar.vue
+ -->
 <template>
   <div>
     <nav-bar>
@@ -36,6 +44,7 @@
       },
       detailNavItemClick(index){
         this.currentTitleIndex = index
+        this.$emit('detailNavClick', index)
       }
     }
   }
