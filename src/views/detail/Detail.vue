@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-17 21:26:52
- * @LastEditTime: 2020-03-18 15:56:40
+ * @LastEditTime: 2020-03-18 21:10:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\Detail.vue
@@ -13,17 +13,21 @@
       <detail-swiper :good-top-images="topImages" />
       <detail-base-info :base-info="goodsInfo" />
       <detail-shop-info :shop-info="shopInfo"/>
+      <detail-info :detail-info="detailInfo" />
+      <detail-param-info :param-info="paramsInfo" />
     </scroll>
   </div>
 </template>
 
 <script>
-  import { getGoodDetailByIid, GoodsInfo, ShopInfo } from 'api/goodDetail'
+  import { getGoodDetailByIid, GoodsInfo, ShopInfo, ParamInfo } from 'api/goodDetail'
 
   import DetailNavBar from './components/DetailNavBar'
   import DetailSwiper from './components/DetailSwiper'
   import DetailBaseInfo from './components/DetailBaseInfo'
   import DetailShopInfo from './components/DetailShopInfo'
+  import DetailParamInfo from './components/DetailParamInfo'
+  import DetailInfo from './components/DetailInfo'
 
   import Scroll from 'components/common/scroll/Scroll'
 
@@ -34,6 +38,8 @@
       DetailSwiper,
       DetailBaseInfo,
       DetailShopInfo,
+      DetailInfo,
+      DetailParamInfo,
       Scroll
     },
     data() {
@@ -41,7 +47,9 @@
         iid: '',
         topImages: [],
         goodsInfo: {},
-        shopInfo: {}
+        shopInfo: {},
+        paramsInfo: {},
+        detailInfo: {}
       }
     },
     created() {
@@ -58,9 +66,12 @@
 
         // 获取商品信息
         this.goodsInfo = new GoodsInfo(data.itemInfo, data.columns, data.shopInfo.services)
-        console.log(this.goodsInfo)
         // 获取商家信息
         this.shopInfo = new ShopInfo(data.shopInfo)
+        // 获取商品详情信息
+        this.detailInfo = data.detailInfo
+        // 获取参数信息
+        this.paramsInfo = new ParamInfo(data.itemParams.info, data.itemParams.rule)
       })
     }
   }

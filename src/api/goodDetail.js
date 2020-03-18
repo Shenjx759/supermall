@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-17 21:51:23
- * @LastEditTime: 2020-03-18 15:54:06
+ * @LastEditTime: 2020-03-18 21:05:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\api\goodDetail.js
@@ -33,11 +33,21 @@ export class GoodsInfo {
 
 export class ShopInfo{
   constructor(shopInfo){
-    this.logo = shopInfo.shopLogo;
-    this.name = shopInfo.name;
-    this.fans = shopInfo.cFans;
-    this.sells = shopInfo.cSells;
-    this.score = shopInfo.score;
+    this.logo = shopInfo.shopLogo
+    this.name = shopInfo.name
+    this.fans = shopInfo.cFans
+    this.sells = shopInfo.cSells
+    this.score = shopInfo.score
     this.goodsCount = shopInfo.cGoods
+  }
+}
+
+export class ParamInfo{
+  constructor(info, rule){
+    // 注: images可能没有值(某些商品有值, 某些没有值)
+    this.image = info.images ? info.images[0] : ''
+    // this.image = detailInfo.detailImage[0].list
+    this.infos = info.set
+    this.sizes = rule.tables
   }
 }
