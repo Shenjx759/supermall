@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-17 21:39:55
- * @LastEditTime: 2020-03-18 21:45:37
+ * @LastEditTime: 2020-03-19 14:55:29
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\components\DetailNavBar.vue
