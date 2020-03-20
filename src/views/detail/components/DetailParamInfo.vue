@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-18 18:00:08
- * @LastEditTime: 2020-03-19 22:00:22
+ * @LastEditTime: 2020-03-20 14:13:36
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\components\DetailParamInfo.vue
