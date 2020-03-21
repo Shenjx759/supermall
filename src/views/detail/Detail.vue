@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-17 21:26:52
- * @LastEditTime: 2020-03-20 16:12:59
+ * @LastEditTime: 2020-03-21 19:47:18
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\Detail.vue
@@ -14,9 +14,9 @@
       <detail-base-info :base-info="goodsInfo" />
       <detail-shop-info :shop-info="shopInfo" />
       <detail-info :detail-info="detailInfo" @detailImgLoadFinish="detailImgLoadFinish" />
-      <detail-param-info :param-info="paramsInfo" ref="goodParamsInfo" />
-      <detail-comment-info :comment-info="commentInfo" />
-      <detail-recomment-info :recommend-info="recommendInfo" />
+      <detail-param-info :param-info="paramsInfo" ref="params" />
+      <detail-comment-info ref="comment" :comment-info="commentInfo" />
+      <detail-recomment-info ref="recomment" :recommend-info="recommendInfo" />
     </scroll>
   </div>
 </template>
@@ -41,6 +41,8 @@ import DetailRecommentInfo from "./components/DetailRecommentInfo";
 
 import Scroll from "components/common/scroll/Scroll";
 
+import { goodImageLoadFinishMixin } from "common/mixin"
+
 export default {
   name: "Detail",
   components: {
@@ -54,6 +56,7 @@ export default {
     DetailRecommentInfo,
     Scroll
   },
+  mixins: [goodImageLoadFinishMixin],
   data() {
     return {
       iid: "",
@@ -63,33 +66,30 @@ export default {
       paramsInfo: {},
       detailInfo: {},
       commentInfo: {},
-      recommendInfo: []
+      recommendInfo: [],
+      navCenterTopY: []
     };
   },
   methods: {
-    scrollRolling() {
+    scrollRolling(position) {
       // scroll滚动监听事件
-      // console.log("1231");
+      let y = -position.y
+      console.log(y)
     },
     detailImgLoadFinish() {
       // 商品详情图片都加载完之后、统一让better-scroll对象刷新一次、刷新用作于让scroll重新计算一次高度
       this.$refs.scroll.refresh();
+      // 每次给navCenterTopY赋值前，都清空一下
+      this.navCenterTopY = []
+      this.navCenterTopY.push(0);
+      this.navCenterTopY.push(this.$refs.params.$el.offsetTop);
+      this.navCenterTopY.push(this.$refs.comment.$el.offsetTop);
+      this.navCenterTopY.push(this.$refs.recomment.$el.offsetTop);
+      console.log(this.navCenterTopY)
     },
     navClick(e) {
-      switch (e) {
-        case 0:
-          this.$refs.scroll.scrollTo(
-            0,
-            this.$refs.goodTopImage.$el.offsetTop,
-            500
-          );
-          break;
-        case 1:
-          break;
-        case 2:
-          break;
-        case 3:
-      }
+      this.$refs.scroll.scrollTo(0, -this.navCenterTopY[e], 500)
+      this.$refs.scroll.refresh();
     },
     _getGoodDetailByIid() {
       // 将传过来的商品id进行保存
@@ -130,7 +130,11 @@ export default {
   created() {
     this._getGoodDetailByIid();
     this._getRecommendData();
-  }
+  },
+  destroyed() {
+    // 取消全局事件的监听
+    this.$EventBus.$off('goodImageLoadFinish', this.goodImageLoadFinishListener)
+  },
 };
 </script>
 

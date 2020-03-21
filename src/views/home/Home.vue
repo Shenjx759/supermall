@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-11 20:23:32
- * @LastEditTime: 2020-03-19 19:02:38
+ * @LastEditTime: 2020-03-21 16:30:57
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\home\Home.vue
@@ -54,7 +54,8 @@ import RecommendView from "./components/RecommendView";
 import FeatureView from "./components/FeatureView";
 
 import { getHomeMultiData, getHomeGoods } from "api/home";
-import { debounce } from "common/utils";
+// import { debounce } from "common/utils";
+import { goodImageLoadFinishMixin } from "common/mixin"
 
 export default {
   name: "Home",
@@ -68,6 +69,7 @@ export default {
     RecommendView,
     FeatureView
   },
+  mixins: [goodImageLoadFinishMixin],
   data() {
     return {
       titles: [
@@ -105,6 +107,7 @@ export default {
       isTabControlfixed: false,
       tabControlOffsetTop: 0,
       scrollY: 0
+      // goodImageLoadFinishListener: null
     };
   },
   methods: {
@@ -171,6 +174,9 @@ export default {
     // console.log('---离开Home视图---')
     // 在此处离开Home视图时、记录一下当前better-scroll的y值
     this.scrollY = this.$refs.scroll.getScrollY();
+
+    // 取消全局事件的监听 $off('需要取消监听的事件名', '取消监听的事件执行的函数、必须传、不然全局的该事件都会给取消掉!')
+    this.$EventBus.$off('goodImageLoadFinish', this.goodImageLoadFinishListener)
   },
   created() {
     // Vue生命周期函数、当VUE实例创建完成时，就会执行这个函数
@@ -184,12 +190,15 @@ export default {
     this._getHomeGoods("sell");
   },
   mounted() {
-    // Vue生命周期函数、当Vue实例将app DOM元素挂载完成时会触发此函数
-    // 调用防抖函数、定义一个变量进行接收防抖函数返回出来的一个新函数。
-    const scrollRefresh = debounce(this.$refs.scroll.refresh, 100);
-    this.$EventBus.$on("goodImageLoadFinish", () => {
-      scrollRefresh();
-    });
+    // 一下代码全由mixin合并、/src/common/mixin.js中
+    // // Vue生命周期函数、当Vue实例将app DOM元素挂载完成时会触发此函数
+    // // 调用防抖函数、定义一个变量进行接收防抖函数返回出来的一个新函数。
+    // const scrollRefresh = debounce(this.$refs.scroll.refresh, 100);
+    // // 将需要执行的刷新方法进行保存到变量中，以便取消全局事件时使用！
+    // this.goodImageLoadFinishListener = () => {
+    //   scrollRefresh();
+    // }
+    // this.$EventBus.$on("goodImageLoadFinish", this.goodImageLoadFinishListener);
   }
 };
 </script>

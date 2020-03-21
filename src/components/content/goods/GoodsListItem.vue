@@ -34,7 +34,7 @@ export default {
   methods: {
     goodImageLoadFinish() {
       // 通过此方法监听到图片加载完成、img标签加载完成就会触发此函数
-      this.$EventBus.$emit("goodImageLoadFinish"); // 通过进行调用Vue事件总线的$emit进行发射出去一个函数
+      this.$EventBus.$emit("goodImageLoadFinish"); // 通过进行调 用Vue事件总线的$emit进行发射出去一个函数
     },
     goodItemClick() {
       // 动态路由方式
