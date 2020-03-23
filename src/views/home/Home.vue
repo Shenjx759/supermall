@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-11 20:23:32
- * @LastEditTime: 2020-03-21 16:30:57
+ * @LastEditTime: 2020-03-23 16:05:41
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\home\Home.vue
@@ -47,15 +47,13 @@ import Scroll from "components/common/scroll/Scroll";
 
 import TabControl from "components/content/tabControl/TabControl";
 import GoodsList from "components/content/goods/GoodsList";
-import BackTop from "components/content/backTop/BackTop";
 
 import HomeSwiper from "./components/HomeSwiper";
 import RecommendView from "./components/RecommendView";
 import FeatureView from "./components/FeatureView";
 
 import { getHomeMultiData, getHomeGoods } from "api/home";
-// import { debounce } from "common/utils";
-import { goodImageLoadFinishMixin } from "common/mixin"
+import { goodImageLoadFinishMixin, BackTopMixin } from "common/mixin"
 
 export default {
   name: "Home",
@@ -64,12 +62,11 @@ export default {
     TabControl,
     GoodsList,
     Scroll,
-    BackTop,
     HomeSwiper,
     RecommendView,
     FeatureView
   },
-  mixins: [goodImageLoadFinishMixin],
+  mixins: [goodImageLoadFinishMixin, BackTopMixin],
   data() {
     return {
       titles: [
@@ -103,11 +100,9 @@ export default {
         }
       },
       currentType: "pop",
-      isShowBackTop: false,
       isTabControlfixed: false,
       tabControlOffsetTop: 0,
       scrollY: 0
-      // goodImageLoadFinishListener: null
     };
   },
   methods: {
@@ -118,11 +113,9 @@ export default {
       this._getHomeGoods(this.currentType);
     },
     contentScroll(position) {
-      this.isShowBackTop = -position.y > 1000;
       this.isTabControlfixed = -position.y > this.tabControlOffsetTop;
-    },
-    backTop() {
-      this.$refs.scroll.scrollTo(0, 0);
+      // this.isShowBackTop = -position.y > 1000;
+      this.isShowBackTopChange(position)
     },
     tabControlChanage(e) {
       this.currentType = e.type;
