@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-17 21:26:52
- * @LastEditTime: 2020-03-23 16:12:06
+ * @LastEditTime: 2020-03-23 17:08:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\Detail.vue
@@ -18,6 +18,7 @@
       <detail-comment-info ref="comment" :comment-info="commentInfo" />
       <detail-recomment-info ref="recomment" :recommend-info="recommendInfo" />
     </scroll>
+    <detail-bottom-bar />
     <back-top @click.native="backTop" v-show="isShowBackTop" />
   </div>
 </template>
@@ -39,6 +40,7 @@ import DetailParamInfo from "./components/DetailParamInfo";
 import DetailInfo from "./components/DetailInfo";
 import DetailCommentInfo from "./components/DetailCommentInfo";
 import DetailRecommentInfo from "./components/DetailRecommentInfo";
+import DetailBottomBar from "./components/DetailBottomBar"
 
 import Scroll from "components/common/scroll/Scroll";
 
@@ -55,7 +57,8 @@ export default {
     DetailParamInfo,
     DetailCommentInfo,
     DetailRecommentInfo,
-    Scroll
+    Scroll,
+    DetailBottomBar
   },
   mixins: [goodImageLoadFinishMixin, BackTopMixin],
   data() {
@@ -99,7 +102,6 @@ export default {
           this.$refs.detailNavBar.currentTitleIndex = this.navCurrentIndex
         }
       }
-
       // this.isShowBackTop = -position.y > 1000;
       this.isShowBackTopChange(position)
     },
@@ -114,7 +116,6 @@ export default {
       this.navCenterTopY.push(this.$refs.recomment.$el.offsetTop);
       // 给数组添加一个 Number类型的最大值
       this.navCenterTopY.push(Number.MAX_VALUE);
-      console.log(this.navCenterTopY)
     },
     navClick(e) {
       this.$refs.scroll.scrollTo(0, -this.navCenterTopY[e], 500)
@@ -180,6 +181,6 @@ export default {
   background-color: #fff;
 }
 .content {
-  height: calc(100% - 44px);
+  height: calc(100% - 44px - 49px);
 }
 </style>
