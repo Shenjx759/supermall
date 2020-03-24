@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-03-11 20:17:39
+ * @LastEditTime: 2020-03-24 21:22:49
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \project\supermall\src\router\index.js
+ */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
@@ -6,7 +14,7 @@ Vue.use(VueRouter)
 // lazy
 const Home = () => import('views/home/Home')
 const Profile = () => import('views/profile/Profile')
-const ShopCart = () => import('views/shopcart/ShopCart')
+const Cart = () => import('views/cart/Cart')
 const Category = () => import('views/category/Category')
 const Detail = () => import('views/detail/Detail')
 
@@ -24,8 +32,8 @@ const router = [
     component: Category
   },
   {
-    path: '/shopcart',
-    component: ShopCart
+    path: '/cart',
+    component: Cart
   },
   {
     path: '/profile',
