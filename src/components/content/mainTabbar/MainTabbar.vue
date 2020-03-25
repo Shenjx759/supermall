@@ -1,3 +1,11 @@
+<!--
+ * @Author: your name
+ * @Date: 2020-03-11 20:13:40
+ * @LastEditTime: 2020-03-25 14:23:46
+ * @LastEditors: your name
+ * @Description: In User Settings Edit
+ * @FilePath: \project\supermall\src\components\content\mainTabbar\MainTabbar.vue
+ -->
 <template>
   <div>
     <tab-bar>
@@ -11,7 +19,7 @@
         <img slot="item-icon-active" src="~assets/img/tabbar/category_active.svg" alt />
         <div slot="item-text">类别</div>
       </tab-bar-item>
-      <tab-bar-item path="/shopcart">
+      <tab-bar-item path="/cart">
         <img slot="item-icon" src="~assets/img/tabbar/shopcart.svg" alt />
         <img slot="item-icon-active" src="~assets/img/tabbar/shopcart_active.svg" alt />
         <div slot="item-text">购物车</div>

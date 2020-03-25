@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-17 21:26:52
- * @LastEditTime: 2020-03-23 17:08:28
+ * @LastEditTime: 2020-03-25 19:40:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\Detail.vue
@@ -18,7 +18,7 @@
       <detail-comment-info ref="comment" :comment-info="commentInfo" />
       <detail-recomment-info ref="recomment" :recommend-info="recommendInfo" />
     </scroll>
-    <detail-bottom-bar />
+    <detail-bottom-bar @addToCart="addToCart" />
     <back-top @click.native="backTop" v-show="isShowBackTop" />
   </div>
 </template>
@@ -40,11 +40,11 @@ import DetailParamInfo from "./components/DetailParamInfo";
 import DetailInfo from "./components/DetailInfo";
 import DetailCommentInfo from "./components/DetailCommentInfo";
 import DetailRecommentInfo from "./components/DetailRecommentInfo";
-import DetailBottomBar from "./components/DetailBottomBar"
+import DetailBottomBar from "./components/DetailBottomBar";
 
 import Scroll from "components/common/scroll/Scroll";
 
-import { goodImageLoadFinishMixin, BackTopMixin } from "common/mixin"
+import { goodImageLoadFinishMixin, BackTopMixin } from "common/mixin";
 
 export default {
   name: "Detail",
@@ -76,16 +76,29 @@ export default {
     };
   },
   methods: {
+    addToCart() {
+      const product = {};
+      product.image = this.topImages[0];
+      product.title = this.goodsInfo.title;
+      product.desc = this.goodsInfo.desc;
+      product.price = this.goodsInfo.realPrice;
+      product.count = 1;
+      product.checked = true;
+      product.iid = this.iid;
+      if (product.iid) {
+        this.$store.dispatch("addToCart", product);
+      }
+    },
     scrollRolling(position) {
       // scroll滚动监听事件
-      let y = -position.y
-      const length = this.navCenterTopY.length
+      let y = -position.y;
+      const length = this.navCenterTopY.length;
       // 第一种情况
       // [0, 7301, 8189, 8426]
       // Y值 大于等于 0 并且 小于 7301 index = 0
       // Y值 大于等于 7301 并且小于 8189 index = 1
       // Y值 大于等于8189 并且小于 8426 index = 2
-      
+
       // 第二种情况
       // Y值 大于等于 8326 index = 3
       // 优化以下 if 判断条件太多
@@ -96,20 +109,24 @@ export default {
       //   }
       // }
       // 优化后
-      for(let i = 0; i < length - 1; i++){
-        if(this.navCurrentIndex !== i && (y >= this.navCenterTopY[i] && y < this.navCenterTopY[i + 1])){
-          this.navCurrentIndex = i 
-          this.$refs.detailNavBar.currentTitleIndex = this.navCurrentIndex
+      for (let i = 0; i < length - 1; i++) {
+        if (
+          this.navCurrentIndex !== i &&
+          y >= this.navCenterTopY[i] &&
+          y < this.navCenterTopY[i + 1]
+        ) {
+          this.navCurrentIndex = i;
+          this.$refs.detailNavBar.currentTitleIndex = this.navCurrentIndex;
         }
       }
       // this.isShowBackTop = -position.y > 1000;
-      this.isShowBackTopChange(position)
+      this.isShowBackTopChange(position);
     },
     detailImgLoadFinish() {
       // 商品详情图片都加载完之后、统一让better-scroll对象刷新一次、刷新用作于让scroll重新计算一次高度
       this.$refs.scroll.refresh();
       // 每次给navCenterTopY赋值前，都清空一下
-      this.navCenterTopY = []
+      this.navCenterTopY = [];
       this.navCenterTopY.push(0);
       this.navCenterTopY.push(this.$refs.params.$el.offsetTop);
       this.navCenterTopY.push(this.$refs.comment.$el.offsetTop);
@@ -118,7 +135,7 @@ export default {
       this.navCenterTopY.push(Number.MAX_VALUE);
     },
     navClick(e) {
-      this.$refs.scroll.scrollTo(0, -this.navCenterTopY[e], 500)
+      this.$refs.scroll.scrollTo(0, -this.navCenterTopY[e], 500);
       this.$refs.scroll.refresh();
     },
     _getGoodDetailByIid() {
@@ -163,8 +180,11 @@ export default {
   },
   destroyed() {
     // 取消全局事件的监听
-    this.$EventBus.$off('goodImageLoadFinish', this.goodImageLoadFinishListener)
-  },
+    this.$EventBus.$off(
+      "goodImageLoadFinish",
+      this.goodImageLoadFinishListener
+    );
+  }
 };
 </script>
 
