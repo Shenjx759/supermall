@@ -1,21 +1,26 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-25 15:08:39
- * @LastEditTime: 2020-03-25 20:01:32
+ * @LastEditTime: 2020-03-25 21:50:27
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\cart\components\CartButtom.vue
  -->
 <template>
   <div class="bottom-menu">
-    <span>全选</span>
+    <check-button class="checked-all" @click.native="checkedAll" :checked="isCheckedAll" />
+    <span @click="checkedAll">全选</span>
     <span class="total-price">合计:{{settlementMoney}}</span>
     <span class="buy-product">去付款({{settlementCount}})</span>
   </div>
 </template>
 <script>
+import CheckButton from "components/content/checkButton/CheckButton";
 export default {
   name: "CartButtom",
+  components: {
+    CheckButton
+  },
   props: {
     settlementCount: {
       type: Number,
@@ -24,6 +29,15 @@ export default {
     settlementMoney: {
       type: [String, Number],
       default: 0
+    },
+    isCheckedAll: {
+      type: Boolean,
+      default: false
+    }
+  },
+  methods: {
+    checkedAll() {
+      this.$emit("checkedAll");
     }
   }
 };
@@ -44,7 +58,7 @@ export default {
   box-sizing: border-box;
 }
 
-.bottom-menu .select-all {
+.bottom-menu .checked-all {
   position: absolute;
   line-height: 0;
   left: 12px;

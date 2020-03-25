@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-25 15:38:56
- * @LastEditTime: 2020-03-25 18:23:03
+ * @LastEditTime: 2020-03-25 21:13:47
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\cart\components\CartListItem.vue
@@ -9,7 +9,7 @@
 <template>
   <div id="shop-item">
     <div class="item-selector">
-      <CheckButton />
+      <CheckButton :checked="product.checked" @click.native="checkedProduct" />
     </div>
     <div class="item-img">
       <img :src="product.image" alt="商品图片" />
@@ -37,8 +37,10 @@ export default {
       required: true
     }
   },
-  data() {
-    return {};
+  methods: {
+    checkedProduct() {
+      this.product.checked = !this.product.checked;
+    }
   }
 };
 </script>

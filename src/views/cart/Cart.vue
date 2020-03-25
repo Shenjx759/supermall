@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-11 20:23:32
- * @LastEditTime: 2020-03-25 19:58:00
+ * @LastEditTime: 2020-03-25 21:48:09
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\shopcart\ShopCart.vue
@@ -14,7 +14,12 @@
       <!-- 购物车列表 -->
       <cart-list :cart-list="cart" />
     </scroll>
-    <cart-buttom :settlement-count="cartCheckedCount" :settlement-money="cartSettlementMoney" />
+    <cart-buttom
+      :settlement-count="cartCheckedCount"
+      :settlement-money="cartSettlementMoney"
+      @checkedAll="checkedAll"
+      :is-checked-all="cartCheckedAll"
+    />
   </div>
 </template>
 
@@ -35,13 +40,35 @@ export default {
     CartList,
     CartButtom
   },
+  methods: {
+    checkedAll() {
+      if (this.cartCheckedAll) {
+        // 全选中的情况下，变成全部不选中
+        this.cart.forEach(currentVal => {
+          currentVal.checked = false;
+        });
+      } else {
+        // 不是全选的情况，都变成选中
+        this.cart.forEach(currentVal => {
+          currentVal.checked = true;
+        });
+      }
+    }
+  },
   computed: {
     ...mapGetters([
       "cart",
       "cartCount",
       "cartCheckedCount",
-      "cartSettlementMoney"
+      "cartSettlementMoney",
+      "cartCheckedAll"
     ])
+  },
+  deactivated() {
+    this.$refs.scroll.refresh();
+  },
+  activated() {
+    this.$refs.scroll.refresh();
   }
 };
 </script>
