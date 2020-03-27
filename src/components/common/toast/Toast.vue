@@ -1,14 +1,14 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-27 15:41:33
- * @LastEditTime: 2020-03-27 21:56:13
+ * @LastEditTime: 2020-03-27 22:38:01
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\components\common\toast\Toast.vue
  -->
 <template>
   <div class="toast" v-show="isShow">
-    <div>{{message}}</div>
+    <div>{{ message }}</div>
   </div>
 </template>
 <script>
@@ -21,7 +21,7 @@ export default {
     };
   },
   methods: {
-    show(message = "默认消息", duration = 2000) {
+    show(message = "默认消息", duration = 1500) {
       this.message = message;
       this.isShow = true;
 
