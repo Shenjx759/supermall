@@ -1,3 +1,11 @@
+/*
+ * @Author: your name
+ * @Date: 2020-03-11 19:54:34
+ * @LastEditTime: 2020-03-27 15:24:45
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: \project\supermall\vue.config.js
+ */
 // vue cli3配置额外需要的配置
 module.exports = {
   configureWebpack: {
@@ -12,7 +20,8 @@ module.exports = {
       }
     },
     devServer: {
-      disableHostCheck: true // 设置了这个才能映射域名！
+      disableHostCheck: true // 设置了这个才能映射域;名！
     }
   }
+  // publicPath: './'
 }

@@ -1,10 +1,10 @@
 <template>
   <div class="goods-item" @click="goodItemClick">
-    <img :src="showImg" alt @load="goodImageLoadFinish" />
+    <img v-lazy="showImg" alt @load="goodImageLoadFinish" />
     <div class="goods-info">
-      <p>{{good.title}}</p>
-      <span class="price">{{good.price}}</span>
-      <span class="collect">{{good.cfav}}</span>
+      <p>{{ good.title }}</p>
+      <span class="price">{{ good.price }}</span>
+      <span class="collect">{{ good.cfav }}</span>
     </div>
   </div>
 </template>

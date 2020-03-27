@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-17 21:26:52
- * @LastEditTime: 2020-03-25 19:40:15
+ * @LastEditTime: 2020-03-27 22:04:53
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\Detail.vue
@@ -20,6 +20,7 @@
     </scroll>
     <detail-bottom-bar @addToCart="addToCart" />
     <back-top @click.native="backTop" v-show="isShowBackTop" />
+    <toast />
   </div>
 </template>
 
@@ -43,6 +44,7 @@ import DetailRecommentInfo from "./components/DetailRecommentInfo";
 import DetailBottomBar from "./components/DetailBottomBar";
 
 import Scroll from "components/common/scroll/Scroll";
+import Toast from "components/common/toast/Toast";
 
 import { goodImageLoadFinishMixin, BackTopMixin } from "common/mixin";
 
@@ -58,7 +60,8 @@ export default {
     DetailCommentInfo,
     DetailRecommentInfo,
     Scroll,
-    DetailBottomBar
+    DetailBottomBar,
+    Toast
   },
   mixins: [goodImageLoadFinishMixin, BackTopMixin],
   data() {
@@ -77,16 +80,18 @@ export default {
   },
   methods: {
     addToCart() {
-      const product = {};
-      product.image = this.topImages[0];
-      product.title = this.goodsInfo.title;
-      product.desc = this.goodsInfo.desc;
-      product.price = this.goodsInfo.realPrice;
-      product.count = 1;
-      product.checked = true;
-      product.iid = this.iid;
-      if (product.iid) {
-        this.$store.dispatch("addToCart", product);
+      if (this.iid) {
+        const product = {};
+        product.image = this.topImages[0];
+        product.title = this.goodsInfo.title;
+        product.desc = this.goodsInfo.desc;
+        product.price = this.goodsInfo.realPrice;
+        product.count = 1;
+        product.checked = true;
+        product.iid = this.iid;
+        this.$store.dispatch("addToCart", product).then(res => {
+          this.$toast.show(res);
+        });
       }
     },
     scrollRolling(position) {

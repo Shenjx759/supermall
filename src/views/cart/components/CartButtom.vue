@@ -8,10 +8,16 @@
  -->
 <template>
   <div class="bottom-menu">
-    <check-button class="checked-all" @click.native="checkedAll" :checked="isCheckedAll" />
+    <check-button
+      class="checked-all"
+      @click.native="checkedAll"
+      :checked="isCheckedAll"
+    />
     <span @click="checkedAll">全选</span>
-    <span class="total-price">合计:{{settlementMoney}}</span>
-    <span class="buy-product">去付款({{settlementCount}})</span>
+    <span class="total-price">合计:{{ settlementMoney }}</span>
+    <span class="buy-product" @click="settle"
+      >去付款({{ settlementCount }})</span
+    >
   </div>
 </template>
 <script>
@@ -38,7 +44,8 @@ export default {
   methods: {
     checkedAll() {
       this.$emit("checkedAll");
-    }
+    },
+    settle() {}
   }
 };
 </script>

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-11 20:23:32
- * @LastEditTime: 2020-03-25 21:48:09
+ * @LastEditTime: 2020-03-27 15:23:07
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\shopcart\ShopCart.vue
@@ -44,14 +44,16 @@ export default {
     checkedAll() {
       if (this.cartCheckedAll) {
         // 全选中的情况下，变成全部不选中
-        this.cart.forEach(currentVal => {
-          currentVal.checked = false;
-        });
+        // this.cart.forEach(currentVal => {
+        //   currentVal.checked = false;
+        // });
+        this.cart.forEach(currentVal => (currentVal.checked = false));
       } else {
         // 不是全选的情况，都变成选中
-        this.cart.forEach(currentVal => {
-          currentVal.checked = true;
-        });
+        // this.cart.forEach(currentVal => {
+        //   currentVal.checked = true;
+        // });
+        this.cart.forEach(currentVal => (currentVal.checked = true));
       }
     }
   },
