@@ -42,7 +42,7 @@ export default {
 .tab-bar-item {
   flex: 1; /* 此样式会把所有class为tab-bar-item的元素均等分 */
   text-align: center;
-  font-size: 14px;
+  font-size: 12px;
 }
 .tab-bar-item img {
   width: 24px;

@@ -1,8 +1,8 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-11 20:13:40
- * @LastEditTime: 2020-03-25 14:23:46
- * @LastEditors: your name
+ * @LastEditTime: 2020-03-28 23:00:54
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\components\content\mainTabbar\MainTabbar.vue
  -->
@@ -26,7 +26,7 @@
       </tab-bar-item>
       <tab-bar-item path="/profile">
         <img slot="item-icon" src="~assets/img/tabbar/profile.svg" alt />
-        <img slot="item-icon-active" src="~assets/img/tabbar/shopcart_active.svg" alt />
+        <img slot="item-icon-active" src="~assets/img/tabbar/profile_active.svg" alt />
         <div slot="item-text">我的</div>
       </tab-bar-item>
     </tab-bar>
@@ -46,5 +46,4 @@ export default {
 </script>
 
 <style>
-
 </style>

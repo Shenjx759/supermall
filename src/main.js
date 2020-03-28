@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-11 16:07:18
- * @LastEditTime: 2020-03-27 22:20:09
+ * @LastEditTime: 2020-03-27 22:43:00
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\main.js
@@ -24,7 +24,7 @@ Vue.use(toast)
 Vue.use(LazyLoad, {
   loading: require('./assets/img/common/placeholder.jpg')
 })
-// 解决移动端300ms延迟
+// 解决移动端 点击 300ms延迟
 FastClick.attach(document.body)
 
 new Vue({

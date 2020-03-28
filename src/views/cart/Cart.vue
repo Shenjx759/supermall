@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-11 20:23:32
- * @LastEditTime: 2020-03-27 15:23:07
+ * @LastEditTime: 2020-03-28 22:47:33
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\shopcart\ShopCart.vue
@@ -91,7 +91,7 @@ export default {
   overflow: hidden;
   position: absolute;
   top: 44px;
-  bottom: calc(49px + 44px);
+  bottom: calc(49px + 49px);
   right: 0;
   left: 0;
 }

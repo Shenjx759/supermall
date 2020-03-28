@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-25 15:38:56
- * @LastEditTime: 2020-03-25 21:13:47
+ * @LastEditTime: 2020-03-28 21:40:54
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\cart\components\CartListItem.vue
@@ -12,14 +12,20 @@
       <CheckButton :checked="product.checked" @click.native="checkedProduct" />
     </div>
     <div class="item-img">
-      <img :src="product.image" alt="商品图片" />
+      <img :src="product.image" />
     </div>
     <div class="item-info">
       <div class="item-title">{{product.title}}</div>
       <div class="item-desc">{{product.desc}}</div>
       <div class="info-bottom">
         <div class="item-price left">¥{{product.price}}</div>
-        <div class="item-count right">x {{product.count}}</div>
+        <!-- <div class="item-count right">x {{product.count}}</div> -->
+        <div class="item-count right">
+          <span class="reduce" @click="decrement">-</span>
+          <!-- <input class="num" :value="product.count" /> -->
+          <input class="num" :value="product.count" />
+          <span class="add" @click="increment">+</span>
+        </div>
       </div>
     </div>
   </div>
@@ -40,6 +46,12 @@ export default {
   methods: {
     checkedProduct() {
       this.product.checked = !this.product.checked;
+    },
+    decrement() {
+      if (this.product.count > 1) this.product.count--;
+    },
+    increment() {
+      this.product.count++;
     }
   }
 };
@@ -99,9 +111,32 @@ export default {
   bottom: 10px;
   left: 10px;
   right: 10px;
+  line-height: 30px;
 }
 
 .info-bottom .item-price {
   color: orangered;
+}
+.info-bottom .item-count {
+  border: 1px solid #dcdfe6;
+  border-radius: 8px;
+  font-size: 15px;
+}
+.reduce,
+.add {
+  margin: 0 8px;
+}
+
+.num {
+  width: 40px;
+  background-color: #fff;
+  border-radius: 5px;
+  border: 0;
+  color: #606266;
+  display: inline-block;
+  height: 30px;
+  line-height: 1;
+  text-align: center;
+  padding: 0 5px;
 }
 </style>
