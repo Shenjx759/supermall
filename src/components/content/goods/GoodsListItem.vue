@@ -29,7 +29,7 @@ export default {
     }
   },
   created() {
-    this.goodIid = this.good.iid;
+    this.goodIid = this.good.iid || this.good.item_id;
   },
   methods: {
     goodImageLoadFinish() {

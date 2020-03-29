@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-25 15:08:39
- * @LastEditTime: 2020-03-28 22:53:31
+ * @LastEditTime: 2020-03-29 17:43:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\cart\components\CartButtom.vue
@@ -53,7 +53,7 @@ export default {
 .bottom-menu {
   width: 100%;
   height: 49px;
-  background-color: #eee;
+  background-color: #f6f6f6;
   position: fixed;
   bottom: 49px;
   left: 0;
