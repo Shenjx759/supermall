@@ -1,15 +1,17 @@
 /*
  * @Author: your name
  * @Date: 2020-03-21 16:22:55
- * @LastEditTime: 2020-03-23 16:07:36
+ * @LastEditTime: 2020-03-31 15:05:52
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\common\mixin.js
  */
-import { debounce } from "./utils";
+import {
+  debounce
+} from "./utils";
 export const goodImageLoadFinishMixin = {
-  data(){
-    return{
+  data() {
+    return {
       goodImageLoadFinishListener: null
     }
   },
@@ -26,12 +28,14 @@ export const goodImageLoadFinishMixin = {
 }
 
 import BackTop from "components/content/backTop/BackTop";
-import { BACK_TOP_NUM } from './const'
+import {
+  BACK_TOP_NUM
+} from './const'
 export const BackTopMixin = {
   components: {
     BackTop
   },
-  data(){
+  data() {
     return {
       isShowBackTop: false
     }
@@ -40,8 +44,29 @@ export const BackTopMixin = {
     backTop() {
       this.$refs.scroll.scrollTo(0, 0);
     },
-    isShowBackTopChange(position){
+    isShowBackTopChange(position) {
       this.isShowBackTop = -position.y > BACK_TOP_NUM;
+    }
+  }
+}
+
+export const TabControlMixin = {
+  data() {
+    return {
+      currentType: 'pop',
+      titles: [{
+          text: "综合",
+          type: "pop"
+        },
+        {
+          text: "新品",
+          type: "new"
+        },
+        {
+          text: "热销",
+          type: "sell"
+        }
+      ]
     }
   }
 }

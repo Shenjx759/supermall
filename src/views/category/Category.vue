@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-11 20:23:32
- * @LastEditTime: 2020-03-30 22:30:28
+ * @LastEditTime: 2020-03-31 15:24:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\category\Category.vue
@@ -11,9 +11,11 @@
     <category-nav class="category-nav" />
     <div class="content">
       <category-menu :menu-data="categoryMenu" ref="menu" @changeMenu="changeMenu" />
-      <scroll class="category-scroll">
+      <scroll class="category-scroll" ref="scroll">
         <div>
           <category-content :subcategories="showSubcategorys" />
+          <tab-control :titles="titles" @tabClick="tabClick" />
+          <goods-list :goods="showCategoryDetail" />
         </div>
       </scroll>
     </div>
@@ -29,18 +31,26 @@ import {
 
 import Scroll from "components/common/scroll/Scroll";
 
+import TabControl from "components/content/tabControl/TabControl";
+import GoodsList from "components/content/goods/GoodsList";
+
 import CategoryNav from "./components/CategoryNav";
 import CategoryMenu from "./components/CategoryMenu";
 import CategoryContent from "./components/CategoryContent";
+
+import { goodImageLoadFinishMixin, TabControlMixin } from "common/mixin";
 
 export default {
   name: "Category",
   components: {
     Scroll,
+    TabControl,
+    GoodsList,
     CategoryNav,
     CategoryMenu,
     CategoryContent
   },
+  mixins: [goodImageLoadFinishMixin, TabControlMixin],
   data() {
     return {
       categoryMenu: [],
@@ -53,12 +63,28 @@ export default {
     showSubcategorys() {
       if (this.currentMenuIndex === -1) return {};
       return this.categoryData[this.currentMenuIndex].subcategorys;
+    },
+    showCategoryDetail() {
+      if (this.currentMenuIndex === -1) return [];
+      return this.categoryData[this.currentMenuIndex].categoryDetail[
+        this.currentType
+      ];
     }
   },
+  deactivated() {
+    this.$EventBus.$off(
+      "goodImageLoadFinish",
+      this.goodImageLoadFinishListener
+    );
+  },
   methods: {
+    tabClick(obj) {
+      this.currentType = obj.type;
+    },
     changeMenu(i) {
       this.currentMenuIndex = i;
       this._getSubCategory(i);
+      this.currentType = "pop";
     },
     _getCategoryMenu() {
       getCategoryMenu()
@@ -85,6 +111,7 @@ export default {
     },
     _getSubCategory(index) {
       const maitKey = this.categoryMenu[index].maitKey;
+      this.currentMenuIndex = index;
       getSubCategory(maitKey)
         .then(res => {
           this.categoryData[index].subcategorys = res.data;

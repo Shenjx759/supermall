@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-11 20:23:32
- * @LastEditTime: 2020-03-28 22:47:33
+ * @LastEditTime: 2020-03-31 15:30:13
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\shopcart\ShopCart.vue
@@ -32,8 +32,11 @@ import CartButtom from "./components/CartButtom";
 
 import { mapGetters } from "vuex";
 
+import { goodImageLoadFinishMixin } from "common/mixin";
+
 export default {
   name: "Cart",
+  mixins: [goodImageLoadFinishMixin],
   components: {
     Scroll,
     CartNav,
@@ -68,6 +71,10 @@ export default {
   },
   deactivated() {
     this.$refs.scroll.refresh();
+    this.$EventBus.$off(
+      "goodImageLoadFinish",
+      this.goodImageLoadFinishListener
+    );
   },
   activated() {
     this.$refs.scroll.refresh();

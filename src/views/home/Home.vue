@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-11 20:23:32
- * @LastEditTime: 2020-03-23 16:05:41
+ * @LastEditTime: 2020-03-31 15:25:55
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\home\Home.vue
@@ -53,7 +53,11 @@ import RecommendView from "./components/RecommendView";
 import FeatureView from "./components/FeatureView";
 
 import { getHomeMultiData, getHomeGoods } from "api/home";
-import { goodImageLoadFinishMixin, BackTopMixin } from "common/mixin"
+import {
+  goodImageLoadFinishMixin,
+  BackTopMixin,
+  TabControlMixin
+} from "common/mixin";
 
 export default {
   name: "Home",
@@ -66,23 +70,9 @@ export default {
     RecommendView,
     FeatureView
   },
-  mixins: [goodImageLoadFinishMixin, BackTopMixin],
+  mixins: [goodImageLoadFinishMixin, BackTopMixin, TabControlMixin],
   data() {
     return {
-      titles: [
-        {
-          text: "流行",
-          type: "pop"
-        },
-        {
-          text: "上新",
-          type: "new"
-        },
-        {
-          text: "热销",
-          type: "sell"
-        }
-      ],
       banners: [],
       recommends: [],
       goods: {
@@ -99,7 +89,6 @@ export default {
           list: []
         }
       },
-      currentType: "pop",
       isTabControlfixed: false,
       tabControlOffsetTop: 0,
       scrollY: 0
@@ -115,7 +104,7 @@ export default {
     contentScroll(position) {
       this.isTabControlfixed = -position.y > this.tabControlOffsetTop;
       // this.isShowBackTop = -position.y > 1000;
-      this.isShowBackTopChange(position)
+      this.isShowBackTopChange(position);
     },
     tabControlChanage(e) {
       this.currentType = e.type;
@@ -169,7 +158,10 @@ export default {
     this.scrollY = this.$refs.scroll.getScrollY();
 
     // 取消全局事件的监听 $off('需要取消监听的事件名', '取消监听的事件执行的函数、必须传、不然全局的该事件都会给取消掉!')
-    this.$EventBus.$off('goodImageLoadFinish', this.goodImageLoadFinishListener)
+    this.$EventBus.$off(
+      "goodImageLoadFinish",
+      this.goodImageLoadFinishListener
+    );
   },
   created() {
     // Vue生命周期函数、当VUE实例创建完成时，就会执行这个函数
