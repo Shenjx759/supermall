@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-18 21:06:20
- * @LastEditTime: 2020-03-19 19:04:56
+ * @LastEditTime: 2020-03-31 16:27:21
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\components\DetailGoodsImgInfo.vue
@@ -18,7 +18,7 @@
       <img
         v-for="(item, index) in detailInfo.detailImage[0].list"
         :key="index"
-        :src="item"
+        :src="'http:' + item"
         @load="imgLoad"
         alt
       />

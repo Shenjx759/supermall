@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-17 21:26:52
- * @LastEditTime: 2020-03-27 22:04:53
+ * @LastEditTime: 2020-03-31 16:23:48
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\Detail.vue
@@ -151,9 +151,10 @@ export default {
         // 接收result
         const data = res.result;
         // 打印data
-        console.log(data);
+        // console.log(data);
         // 保存商品的轮播图
         this.topImages = data.itemInfo.topImages;
+        console.log(this.topImages);
         // 获取商品信息
         this.goodsInfo = new GoodsInfo(
           data.itemInfo,

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-25 15:38:56
- * @LastEditTime: 2020-03-28 21:40:54
+ * @LastEditTime: 2020-03-31 16:30:28
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\cart\components\CartListItem.vue
@@ -12,7 +12,7 @@
       <CheckButton :checked="product.checked" @click.native="checkedProduct" />
     </div>
     <div class="item-img">
-      <img :src="product.image" />
+      <img :src="'http:' + product.image" />
     </div>
     <div class="item-info">
       <div class="item-title">{{product.title}}</div>

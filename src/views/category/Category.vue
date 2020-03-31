@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-11 20:23:32
- * @LastEditTime: 2020-03-31 15:24:26
+ * @LastEditTime: 2020-03-31 15:44:20
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\category\Category.vue

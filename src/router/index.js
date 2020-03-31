@@ -1,8 +1,8 @@
 /*
  * @Author: your name
  * @Date: 2020-03-11 20:17:39
- * @LastEditTime: 2020-03-24 21:22:49
- * @LastEditors: your name
+ * @LastEditTime: 2020-03-31 16:20:50
+ * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\router\index.js
  */
@@ -18,8 +18,7 @@ const Cart = () => import('views/cart/Cart')
 const Category = () => import('views/category/Category')
 const Detail = () => import('views/detail/Detail')
 
-const router = [
-  {
+const router = [{
     path: '',
     redirect: '/home'
   },
@@ -47,5 +46,5 @@ const router = [
 
 export default new VueRouter({
   routes: router,
-  mode: 'history'
+  mode: 'hash' //打包成app时，得用hash模式
 })
