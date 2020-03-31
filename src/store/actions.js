@@ -1,14 +1,15 @@
 /*
  * @Author: your name
  * @Date: 2020-03-25 18:49:06
- * @LastEditTime: 2020-03-30 10:53:13
+ * @LastEditTime: 2020-03-31 22:02:26
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\store\actions.js
  */
 import {
   ADD_COUNT,
-  ADD_TO_CART
+  ADD_TO_CART,
+  CLEAR_CART
 } from './mutations-type'
 
 export default {
@@ -23,6 +24,13 @@ export default {
         context.commit(ADD_TO_CART, payload)
         resolve('加入购物车成功')
       }
+    })
+  },
+  clearCart(context) {
+    return new Promise(resolve => {
+      let findResult = context.state.goodsCart.filter(currentVal => !currentVal.checked)
+      context.commit(CLEAR_CART, findResult)
+      resolve('结算成功，马上发货哈！')
     })
   }
 }

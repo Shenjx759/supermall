@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-19 19:43:38
- * @LastEditTime: 2020-03-20 15:51:02
+ * @LastEditTime: 2020-03-31 22:40:34
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\components\DetailCommentInfo.vue
@@ -16,17 +16,21 @@
       </div>
     </div>
     <div class="info-user">
-      <img :src="commentInfo.user.avatar" alt />
-      <span>{{commentInfo.user.uname}}</span>
+      <img :src="'http:' + commentInfo.user.avatar" alt />
+      <span>{{ commentInfo.user.uname }}</span>
     </div>
     <div class="info-detail">
-      <p>{{commentInfo.content}}</p>
+      <p>{{ commentInfo.content }}</p>
       <div class="info-other">
-        <span class="date">{{commentInfo.created | showDate}}</span>
-        <span>{{commentInfo.style}}</span>
+        <span class="date">{{ commentInfo.created | showDate }}</span>
+        <span>{{ commentInfo.style }}</span>
       </div>
       <div class="info-imgs">
-        <img :src="item" v-for="(item, index) in commentInfo.images" :key="index" />
+        <img
+          :src="'http:' + item"
+          v-for="(item, index) in commentInfo.images"
+          :key="index"
+        />
       </div>
     </div>
   </div>

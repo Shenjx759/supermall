@@ -1,13 +1,18 @@
 @import "./normalize.css";
+
 /* :root -->获取根元素 */
 :root {
-    /* css中通过--来定义变量，通过var(变量名)来使用 */
+  /* css中通过--来定义变量，通过var(变量名)来使用 */
   --color-text: #666;
   --color-high-text: #ff5777;
   --color-tint: #ff8198;
   --color-background: #fff;
   --font-size: 14px;
   --line-height: 1.5;
+}
+
+* {
+  touch-action: pan-y;
 }
 
 *,
@@ -19,9 +24,11 @@
 }
 
 body {
-  font-family: "Helvetica Neue",Helvetica,"PingFang SC","Hiragino Sans GB","Microsoft YaHei","微软雅黑",Arial,sans-serif;
-  user-select: none; /* 禁止用户鼠标在页面上选中文字/图片等 */
-  -webkit-tap-highlight-color: transparent; /* webkit是苹果浏览器引擎，tap点击，highlight背景高亮，color颜色，颜色用数值调节 */
+  font-family: "Helvetica Neue", Helvetica, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "微软雅黑", Arial, sans-serif;
+  user-select: none;
+  /* 禁止用户鼠标在页面上选中文字/图片等 */
+  -webkit-tap-highlight-color: transparent;
+  /* webkit是苹果浏览器引擎，tap点击，highlight背景高亮，color颜色，颜色用数值调节 */
   background: var(--color-background);
   color: var(--color-text);
   /* rem vw/vh */
@@ -54,4 +61,3 @@ a {
 .right {
   float: right;
 }
-

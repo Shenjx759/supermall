@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-11 20:23:32
- * @LastEditTime: 2020-03-31 15:25:55
+ * @LastEditTime: 2020-03-31 22:04:45
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\home\Home.vue
@@ -26,7 +26,10 @@
       :pull-up-load="true"
       @pullUpLoad="loadNextPageData"
     >
-      <home-swiper :banners="banners" @homeSwiperImgLoadFinish="swiperImgLoadFinish" />
+      <home-swiper
+        :banners="banners"
+        @homeSwiperImgLoadFinish="swiperImgLoadFinish"
+      />
       <recommend-view :recommends="recommends" />
       <feature-view />
       <tab-control
@@ -95,6 +98,12 @@ export default {
     };
   },
   methods: {
+    _isMobile() {
+      let flag = navigator.userAgent.match(
+        /(phone|pad|pod|iPhone|iPod|ios|iPad|Android|Mobile|BlackBerry|IEMobile|MQQBrowser|JUC|Fennec|wOSBrowser|BrowserNG|WebOS|Symbian|Windows Phone)/i
+      );
+      return flag;
+    },
     swiperImgLoadFinish() {
       this.tabControlOffsetTop = this.$refs.tabControl2.$el.offsetTop;
     },
@@ -184,6 +193,14 @@ export default {
     //   scrollRefresh();
     // }
     // this.$EventBus.$on("goodImageLoadFinish", this.goodImageLoadFinishListener);
+    if (this._isMobile()) {
+      this.$toast.show("此APP数据皆为虚构、而且许多功能未进行开发！", 1500);
+      setTimeout(() => {
+        this.$toast.show("GitHub：Shenjx759", 2500);
+      }, 2000);
+    } else {
+      this.$toast.show("建议使用手机浏览器获得更好体验", 9000);
+    }
   }
 };
 </script>

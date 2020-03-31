@@ -1,13 +1,13 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-11 20:23:32
- * @LastEditTime: 2020-03-31 15:40:22
+ * @LastEditTime: 2020-03-31 21:31:23
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\profile\Profile.vue
  -->
 <template>
-  <div class="profile">
+  <div class="profile" @click="profileClick">
     <profile-nav class="profile-nav" />
     <user-info />
     <account-info />
@@ -41,6 +41,11 @@ export default {
         { icon: "shopping.svg", info: "下载购物APP" }
       ]
     };
+  },
+  methods: {
+    profileClick() {
+      this.$toast.show("此功能待完善中");
+    }
   }
 };
 </script>

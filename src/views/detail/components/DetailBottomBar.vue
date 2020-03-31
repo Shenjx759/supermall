@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-23 16:22:38
- * @LastEditTime: 2020-03-25 16:03:35
+ * @LastEditTime: 2020-03-31 21:34:38
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\components\DetailBottom.vue
@@ -9,22 +9,22 @@
 <template>
   <div class="bottom-bar">
     <div class="bar-item bar-left">
-      <div>
+      <div @click="serviceClick">
         <i class="icon service"></i>
         <span class="text">客服</span>
       </div>
-      <div>
+      <div @click="shopClick">
         <i class="icon shop"></i>
         <span class="text">店铺</span>
       </div>
-      <div>
+      <div @click="collect">
         <i class="icon select"></i>
         <span class="text">收藏</span>
       </div>
     </div>
     <div class="bar-item bar-right">
       <div class="cart" @click="addToCart">加入购物车</div>
-      <div class="buy">直接购买</div>
+      <div class="buy" @click="buyClick">直接购买</div>
     </div>
   </div>
 </template>
@@ -34,6 +34,18 @@ export default {
   methods: {
     addToCart() {
       this.$emit("addToCart");
+    },
+    collect() {
+      this.$emit("collectGood");
+    },
+    shopClick() {
+      this.$toast.show("此功能待完善中");
+    },
+    serviceClick() {
+      this.$toast.show("此功能待完善中");
+    },
+    buyClick() {
+      this.$emit("buyClick");
     }
   }
 };

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-18 15:40:20
- * @LastEditTime: 2020-03-19 18:32:57
+ * @LastEditTime: 2020-03-31 17:02:03
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\components\DetailShopInfo.vue
@@ -9,7 +9,7 @@
 <template>
   <div class="shop-info" v-if="Object.keys(shopInfo).length !== 0">
     <div class="shop-top">
-      <img :src="shopInfo.logo" />
+      <img :src="'http:' + shopInfo.logo" />
       <span class="title">{{ shopInfo.name }}</span>
     </div>
     <div class="shop-middle">

@@ -1,7 +1,7 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-25 15:08:39
- * @LastEditTime: 2020-03-29 17:43:20
+ * @LastEditTime: 2020-03-31 21:08:25
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\cart\components\CartButtom.vue
@@ -9,7 +9,11 @@
 <template>
   <div class="bottom-menu">
     <div class="checked-all">
-      <check-button class="checked-btn" @click.native="checkedAll" :checked="isCheckedAll" />
+      <check-button
+        class="checked-btn"
+        @click.native="checkedAll"
+        :checked="isCheckedAll"
+      />
       <span @click="checkedAll">全选</span>
     </div>
 
@@ -45,7 +49,9 @@ export default {
     checkedAll() {
       this.$emit("checkedAll");
     },
-    settle() {}
+    settle() {
+      this.$emit("settle");
+    }
   }
 };
 </script>

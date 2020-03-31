@@ -1,24 +1,35 @@
 <!--
  * @Author: your name
  * @Date: 2020-03-17 21:26:52
- * @LastEditTime: 2020-03-31 16:23:48
+ * @LastEditTime: 2020-03-31 21:43:15
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\views\detail\Detail.vue
  -->
 <template>
   <div class="detail">
-    <detail-nav-bar class="detail-nav" ref="detailNavBar" @detailNavClick="navClick" />
+    <detail-nav-bar
+      class="detail-nav"
+      ref="detailNavBar"
+      @detailNavClick="navClick"
+    />
     <scroll ref="scroll" class="content" :probeType="3" @scroll="scrollRolling">
       <detail-swiper :good-top-images="topImages" ref="goodTopImage" />
       <detail-base-info :base-info="goodsInfo" />
       <detail-shop-info :shop-info="shopInfo" />
-      <detail-info :detail-info="detailInfo" @detailImgLoadFinish="detailImgLoadFinish" />
+      <detail-info
+        :detail-info="detailInfo"
+        @detailImgLoadFinish="detailImgLoadFinish"
+      />
       <detail-param-info :param-info="paramsInfo" ref="params" />
       <detail-comment-info ref="comment" :comment-info="commentInfo" />
       <detail-recomment-info ref="recomment" :recommend-info="recommendInfo" />
     </scroll>
-    <detail-bottom-bar @addToCart="addToCart" />
+    <detail-bottom-bar
+      @addToCart="addToCart"
+      @collectGood="collect"
+      @buyClick="buy"
+    />
     <back-top @click.native="backTop" v-show="isShowBackTop" />
     <toast />
   </div>
@@ -79,20 +90,34 @@ export default {
     };
   },
   methods: {
+    buy() {
+      if (this.iid) {
+        this.$store.dispatch("addToCart", this.getProduct()).then(res => {
+          this.$router.push("/cart");
+          console.log(res);
+        });
+      }
+    },
+    collect() {
+      this.$toast.show("收藏成功");
+    },
     addToCart() {
       if (this.iid) {
-        const product = {};
-        product.image = this.topImages[0];
-        product.title = this.goodsInfo.title;
-        product.desc = this.goodsInfo.desc;
-        product.price = this.goodsInfo.realPrice;
-        product.count = 1;
-        product.checked = true;
-        product.iid = this.iid;
-        this.$store.dispatch("addToCart", product).then(res => {
+        this.$store.dispatch("addToCart", this.getProduct()).then(res => {
           this.$toast.show(res);
         });
       }
+    },
+    getProduct() {
+      const product = {};
+      product.image = this.topImages[0];
+      product.title = this.goodsInfo.title;
+      product.desc = this.goodsInfo.desc;
+      product.price = this.goodsInfo.realPrice;
+      product.count = 1;
+      product.checked = true;
+      product.iid = this.iid;
+      return product;
     },
     scrollRolling(position) {
       // scroll滚动监听事件
@@ -154,7 +179,6 @@ export default {
         // console.log(data);
         // 保存商品的轮播图
         this.topImages = data.itemInfo.topImages;
-        console.log(this.topImages);
         // 获取商品信息
         this.goodsInfo = new GoodsInfo(
           data.itemInfo,
@@ -170,6 +194,7 @@ export default {
           data.itemParams.info,
           data.itemParams.rule
         );
+
         // 获取商品评论信息
         this.commentInfo = data.rate.cRate === 0 ? {} : data.rate.list[0];
       });

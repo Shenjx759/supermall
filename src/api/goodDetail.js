@@ -1,7 +1,7 @@
 /*
  * @Author: your name
  * @Date: 2020-03-17 21:51:23
- * @LastEditTime: 2020-03-20 16:09:42
+ * @LastEditTime: 2020-03-31 21:22:35
  * @LastEditors: Please set LastEditors
  * @Description: In User Settings Edit
  * @FilePath: \project\supermall\src\api\goodDetail.js
@@ -53,7 +53,7 @@ export class ParamInfo {
     this.image = info.images ? info.images[0] : ''
     // this.image = detailInfo.detailImage[0].list
     this.infos = info.set
-    this.sizes = rule.tables
+    this.sizes = rule == undefined ? {} : rule.tables
   }
 }
 
